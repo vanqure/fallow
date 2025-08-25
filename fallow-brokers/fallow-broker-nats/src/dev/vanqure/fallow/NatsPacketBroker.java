@@ -19,7 +19,7 @@ public final class NatsPacketBroker implements PacketBroker {
 
     private final Set<String> subscribedTopics;
 
-    NatsPacketBroker(
+    private NatsPacketBroker(
             final Wisp wisp,
             final Connection connection,
             final PacketCodec packetCodec,

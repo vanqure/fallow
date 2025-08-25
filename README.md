@@ -19,7 +19,7 @@ Fallow in action:
 
 ```java
 final PacketCodec packetCodec = JacksonPacketCodecFactory.create();
-final PacketBroker packetBroker = new RedisPacketBroker(
+final PacketBroker packetBroker = RedisPacketBroker.create(
         Wisp.create(), RedisClient.create("redis://localhost:6379"), packetCodec, Duration.ofSeconds(30L));
 
 packetBroker         

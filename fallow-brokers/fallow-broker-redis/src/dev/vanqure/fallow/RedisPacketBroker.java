@@ -25,7 +25,7 @@ public final class RedisPacketBroker implements PacketBroker {
 
     private final Set<String> subscribedTopics;
 
-    public RedisPacketBroker(
+    private RedisPacketBroker(
             final Wisp wisp,
             final RedisClient redisClient,
             final PacketCodec packetCodec,
