@@ -3,6 +3,10 @@ jupiter = "5.13.4"
 assertj = "3.27.4"
 annotations = "26.0.2"
 wisp = "1.0.0-SNAPSHOT"
+jnats = "2.21.5"
+lettuce = "6.8.0.RELEASE"
+jackson = "2.19.2"
+msgpack = "0.9.10"
 
 [libraries]
 assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj" }
@@ -10,3 +14,7 @@ junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.re
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "jupiter" }
 jetbrains-annotations = { module = "org.jetbrains:annotations", version.ref = "annotations" }
 wisp = { module = "dev.vanqure.wisp:wisp", version.ref = "wisp" }
+jnats = { module = "io.nats:jnats", version.ref = "jnats" }
+lettuce-core = { module = "io.lettuce:lettuce-core", version.ref = "lettuce" }
+jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
+msgpack-jackson-dataformat = { module = "org.msgpack:jackson-dataformat-msgpack", version.ref = "msgpack" }

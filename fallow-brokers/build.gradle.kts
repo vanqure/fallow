@@ -1,0 +1,3 @@
+plugins {
+    `fallow-java-parent`
+}
