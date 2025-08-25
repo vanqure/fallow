@@ -2,7 +2,6 @@ plugins {
     `fallow-java`
     `fallow-publish`
     `fallow-repositories`
-    `fallow-unit`
 }
 
 dependencies {
