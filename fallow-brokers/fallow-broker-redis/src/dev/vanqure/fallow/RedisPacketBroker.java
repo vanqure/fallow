@@ -14,7 +14,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
-public final class RedisPacketBroker implements PacketBroker {
+final class RedisPacketBroker implements PacketBroker {
 
     private final Wisp wisp;
     private final PacketCodec packetCodec;
@@ -25,7 +25,7 @@ public final class RedisPacketBroker implements PacketBroker {
 
     private final Set<String> subscribedTopics;
 
-    private RedisPacketBroker(
+    RedisPacketBroker(
             final Wisp wisp,
             final RedisClient redisClient,
             final PacketCodec packetCodec,
@@ -53,14 +53,6 @@ public final class RedisPacketBroker implements PacketBroker {
         } catch (final Exception exception) {
             throw new PacketPublishingException("Couldn't publish packet over the packet broker.", exception);
         }
-    }
-
-    public static PacketBroker create(
-            final Wisp wisp,
-            final RedisClient redisClient,
-            final PacketCodec packetCodec,
-            final Duration requestCleanupInterval) {
-        return new RedisPacketBroker(wisp, redisClient, packetCodec, requestCleanupInterval);
     }
 
     @Override

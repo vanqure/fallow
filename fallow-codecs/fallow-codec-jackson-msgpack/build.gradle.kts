@@ -10,5 +10,5 @@ dependencies {
 }
 
 fallowPublish {
-    artifactId = "fallow-codec-jackson"
+    artifactId = "fallow-codec-jackson-msgpack"
 }

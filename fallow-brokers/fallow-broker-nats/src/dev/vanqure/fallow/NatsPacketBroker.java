@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
-public final class NatsPacketBroker implements PacketBroker {
+final class NatsPacketBroker implements PacketBroker {
 
     private final Wisp wisp;
     private final Connection connection;
@@ -19,7 +19,7 @@ public final class NatsPacketBroker implements PacketBroker {
 
     private final Set<String> subscribedTopics;
 
-    private NatsPacketBroker(
+    NatsPacketBroker(
             final Wisp wisp,
             final Connection connection,
             final PacketCodec packetCodec,
@@ -44,14 +44,6 @@ public final class NatsPacketBroker implements PacketBroker {
         } catch (final Exception exception) {
             throw new PacketPublishingException("Couldn't publish packet over the packet broker.", exception);
         }
-    }
-
-    public static PacketBroker create(
-            final Wisp wisp,
-            final Connection connection,
-            final PacketCodec packetCodec,
-            final Duration requestCleanupInterval) {
-        return new NatsPacketBroker(wisp, connection, packetCodec, requestCleanupInterval);
     }
 
     @Override

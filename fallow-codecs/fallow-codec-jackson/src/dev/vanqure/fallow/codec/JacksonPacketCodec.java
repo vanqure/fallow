@@ -1,6 +1,5 @@
 package dev.vanqure.fallow.codec;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.vanqure.fallow.Packet;
 import java.util.Arrays;
@@ -14,22 +13,22 @@ final class JacksonPacketCodec implements PacketCodec {
     }
 
     @Override
-    public Packet deserialize(final byte[] serializedData) throws PacketCodecException {
+    public Packet deserialize(final byte[] serializedData) throws PacketDeserializationException {
         try {
             return mapper.readValue(serializedData, JacksonPacket.class);
         } catch (final Exception exception) {
-            throw new PacketCodecException(
+            throw new PacketDeserializationException(
                     "Couldn't deserialize packet %s using Jackson codec".formatted(Arrays.toString(serializedData)),
                     exception);
         }
     }
 
     @Override
-    public byte[] serialize(final Packet packet) throws PacketCodecException {
+    public byte[] serialize(final Packet packet) throws PacketSerializationException {
         try {
             return mapper.writeValueAsBytes(packet);
-        } catch (final JsonProcessingException exception) {
-            throw new PacketCodecException(
+        } catch (final Exception exception) {
+            throw new PacketSerializationException(
                     "Couldn't serialize packet %s using Jackson codec".formatted(packet), exception);
         }
     }

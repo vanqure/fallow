@@ -8,11 +8,11 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
 import org.msgpack.jackson.dataformat.MessagePackFactory;
 
-public final class MsgpackJacksonObjectMapperFactory {
+public final class MsgpackBasedObjectMapperProducer {
 
-    private MsgpackJacksonObjectMapperFactory() {}
+    private MsgpackBasedObjectMapperProducer() {}
 
-    public static ObjectMapper create() {
+    public static ObjectMapper produceMapper() {
         final ObjectMapper mapper = new ObjectMapper(new MessagePackFactory())
                 .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
                 .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)

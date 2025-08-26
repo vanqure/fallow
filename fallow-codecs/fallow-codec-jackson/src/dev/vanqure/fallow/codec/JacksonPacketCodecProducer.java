@@ -8,11 +8,11 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
-public final class JacksonPacketCodecFactory {
+public final class JacksonPacketCodecProducer {
 
-    private JacksonPacketCodecFactory() {}
+    private JacksonPacketCodecProducer() {}
 
-    public static PacketCodec create() {
+    public static PacketCodec produceCodec() {
         final JsonMapper mapper =
                 JsonMapper.builder()
                         .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
@@ -25,10 +25,10 @@ public final class JacksonPacketCodecFactory {
                         .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
                         .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
                         .withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
-        return create(mapper);
+        return produceCodec(mapper);
     }
 
-    public static PacketCodec create(final ObjectMapper objectMapper) {
+    public static PacketCodec produceCodec(final ObjectMapper objectMapper) {
         return new JacksonPacketCodec(objectMapper);
     }
 }
