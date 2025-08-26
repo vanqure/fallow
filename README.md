@@ -18,12 +18,10 @@ You can build dependency and append it to your local .m2 directory, by using: `.
 Fallow in action:
 
 ```java
-final PacketCodec baseJacksonCodec = JacksonPacketCodecProducer.produceCodec();
-final PacketCodec msgpackJacksonCodec = JacksonPacketCodecProducer.produceCodec(
-        MsgpackBasedObjectMapperProducer.produceMapper()
-);
 final PacketBroker packetBroker = RedisPacketBroker.create(
-        Wisp.create(), RedisClient.create("redis://localhost:6379"), msgpackJacksonCodec, Duration.ofSeconds(30L));
+        Wisp.create(), RedisClient.create("redis://localhost:6379"), 
+        JacksonPacketCodecProducer.produceCodec(), 
+        Duration.ofSeconds(30L));
 
 packetBroker         
         .<MasterSlaveResponsePacket>request("tests", new MasterSlaveRequestPacket("Ping!"))
