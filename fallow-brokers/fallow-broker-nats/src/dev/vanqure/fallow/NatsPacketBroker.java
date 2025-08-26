@@ -37,7 +37,7 @@ final class NatsPacketBroker implements PacketBroker {
     }
 
     @Override
-    public void publish(final String channelName, final Packet packet) {
+    public void publish(final String channelName, final Packet packet) throws PacketPublishingException {
         try {
             final byte[] payload = packetCodec.serialize(packet);
             connection.publish(channelName, payload);
@@ -47,7 +47,8 @@ final class NatsPacketBroker implements PacketBroker {
     }
 
     @Override
-    public <R extends Packet> CompletableFuture<R> request(final String channelName, final Packet packet) {
+    public <R extends Packet> CompletableFuture<R> request(final String channelName, final Packet packet)
+            throws PacketRequestingException {
         try {
             final byte[] payload = packetCodec.serialize(packet);
             return connection
@@ -65,28 +66,36 @@ final class NatsPacketBroker implements PacketBroker {
     }
 
     @Override
-    public void subscribe(final Subscriber subscriber) {
+    public void subscribe(final Subscriber subscriber) throws PacketSubscribingException {
         final var topic = subscriber.topic();
         if (topic == null || topic.isEmpty()) {
             throw new PacketSubscribingException("Subscriber's topic cannot be null or empty");
         }
 
-        wisp.subscribe(subscriber);
+        try {
+            wisp.subscribe(subscriber);
 
-        if (subscribedTopics.contains(topic)) {
-            return;
+            if (subscribedTopics.contains(topic)) {
+                return;
+            }
+
+            subscribedTopics.add(topic);
+            connection
+                    .createDispatcher(message -> {
+                        final var payload = message.getData();
+
+                        final var packet = packetCodec.deserialize(payload);
+                        packet.setReplyTo(message.getReplyTo());
+
+                        wisp.publish(packet, topic);
+                    })
+                    .subscribe(topic);
+        } catch (final Exception exception) {
+            throw new PacketSubscribingException(
+                    "Couldn't create a dispatcher and subscribe to topic %s with subscriber %s."
+                            .formatted(topic, subscriber),
+                    exception);
         }
-
-        connection
-                .createDispatcher(message -> {
-                    final var payload = message.getData();
-
-                    final var packet = packetCodec.deserialize(payload);
-                    packet.setReplyTo(message.getReplyTo());
-
-                    wisp.publish(packet, topic);
-                })
-                .subscribe(topic);
     }
 
     @Override
