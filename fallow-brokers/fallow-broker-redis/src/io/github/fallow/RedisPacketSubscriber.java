@@ -14,13 +14,13 @@ final class RedisPacketSubscriber implements RedisPubSubListener<String, byte[]>
     }
 
     @Override
-    public void message(String pattern, String channelName, byte[] message) {
-        message("%s:%s".formatted(pattern, channelName), message);
+    public void message(String pattern, String topic, byte[] message) {
+        message("%s:%s".formatted(pattern, topic), message);
     }
 
     @Override
-    public void message(String channelName, byte[] message) {
-        if (subscribedTopic.equals(channelName)) {
+    public void message(String topic, byte[] message) {
+        if (subscribedTopic.equals(topic)) {
             receiver.accept(message);
         }
     }

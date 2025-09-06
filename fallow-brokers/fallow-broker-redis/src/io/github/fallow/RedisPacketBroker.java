@@ -46,17 +46,17 @@ final class RedisPacketBroker implements PacketBroker {
     }
 
     @Override
-    public void publish(String channelName, Packet packet) throws PacketPublishingException {
+    public void publish(String topic, Packet packet) throws PacketPublishingException {
         try {
             byte[] payload = packetCodec.serialize(packet);
-            connection.sync().publish(channelName, payload);
+            connection.sync().publish(topic, payload);
         } catch (Exception exception) {
             throw new PacketPublishingException("Couldn't publish packet over the packet broker.", exception);
         }
     }
 
     @Override
-    public <R extends Packet> CompletableFuture<R> request(String channelName, Packet request)
+    public <R extends Packet> CompletableFuture<R> request(String topic, Packet request)
             throws PacketRequestingException {
         try {
             String replyTo = UUID.randomUUID().toString();
@@ -71,7 +71,7 @@ final class RedisPacketBroker implements PacketBroker {
             responseFuture.whenCompleteAsync(
                     (response, throwable) -> pubSubConnection.sync().unsubscribe(replyTo));
 
-            publish(channelName, request);
+            publish(topic, request);
 
             return responseFuture.thenApply(packetCodec::deserialize).thenApply(response -> {
                 //noinspection unchecked
@@ -79,7 +79,7 @@ final class RedisPacketBroker implements PacketBroker {
             });
         } catch (Exception exception) {
             throw new PacketRequestingException(
-                    "Couldn't get response over the packet broker from %s.".formatted(channelName), exception);
+                    "Couldn't get response over the packet broker from %s.".formatted(topic), exception);
         }
     }
 

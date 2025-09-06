@@ -6,9 +6,9 @@ import java.util.concurrent.CompletableFuture;
 
 public interface PacketBroker extends Closeable {
 
-    void publish(String channelName, Packet packet) throws PacketPublishingException;
+    void publish(String topic, Packet packet) throws PacketPublishingException;
 
-    <R extends Packet> CompletableFuture<R> request(String channelName, Packet packet) throws PacketRequestingException;
+    <R extends Packet> CompletableFuture<R> request(String topic, Packet packet) throws PacketRequestingException;
 
     void subscribe(Subscriber subscriber) throws PacketSubscribingException;
 }

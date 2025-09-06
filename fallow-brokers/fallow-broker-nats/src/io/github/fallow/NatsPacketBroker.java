@@ -33,22 +33,22 @@ final class NatsPacketBroker implements PacketBroker {
     }
 
     @Override
-    public void publish(String channelName, Packet packet) throws PacketPublishingException {
+    public void publish(String topic, Packet packet) throws PacketPublishingException {
         try {
             byte[] payload = packetCodec.serialize(packet);
-            connection.publish(channelName, payload);
+            connection.publish(topic, payload);
         } catch (Exception exception) {
             throw new PacketPublishingException("Couldn't publish packet over the packet broker.", exception);
         }
     }
 
     @Override
-    public <R extends Packet> CompletableFuture<R> request(String channelName, Packet packet)
+    public <R extends Packet> CompletableFuture<R> request(String topic, Packet packet)
             throws PacketRequestingException {
         try {
             byte[] payload = packetCodec.serialize(packet);
             return connection
-                    .requestWithTimeout(channelName, payload, requestCleanupInterval)
+                    .requestWithTimeout(topic, payload, requestCleanupInterval)
                     .thenApply(Message::getData)
                     .thenApply(packetCodec::deserialize)
                     .thenApply(response -> {
@@ -57,7 +57,7 @@ final class NatsPacketBroker implements PacketBroker {
                     });
         } catch (Exception exception) {
             throw new PacketRequestingException(
-                    "Couldn't get response over the packet broker from %s.".formatted(channelName), exception);
+                    "Couldn't get response over the packet broker from %s.".formatted(topic), exception);
         }
     }
 
