@@ -1,7 +1,6 @@
 plugins {
-    `fallow-java`
-    `fallow-publish`
-    `fallow-repositories`
+    id("io.github.fallow.java")
+    id("io.github.fallow.publish")
 }
 
 dependencies {

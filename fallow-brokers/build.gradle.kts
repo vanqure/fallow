@@ -1,3 +1,3 @@
 plugins {
-    `fallow-java-parent`
+    id("io.github.fallow.parent")
 }
