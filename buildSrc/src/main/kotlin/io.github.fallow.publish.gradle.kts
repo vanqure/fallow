@@ -3,7 +3,7 @@ plugins {
     `maven-publish`
 }
 
-group = "dev.vanqure.fallow"
+group = "io.github.fallow"
 version = "1.0.1-SNAPSHOT"
 
 java {

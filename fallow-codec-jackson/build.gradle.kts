@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    api(project(":fallow-codecs:fallow-codec-common"))
+    api(project(":fallow-codec-common"))
     api(libs.jackson.databind)
 }
 

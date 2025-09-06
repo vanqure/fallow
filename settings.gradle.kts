@@ -1,8 +1,10 @@
 rootProject.name = "fallow"
-include(":fallow-codecs")
-include(":fallow-codecs:fallow-codec-common")
-include(":fallow-codecs:fallow-codec-jackson")
-include(":fallow-brokers")
-include(":fallow-brokers:fallow-broker-common")
-include(":fallow-brokers:fallow-broker-nats")
-include(":fallow-brokers:fallow-broker-redis")
+
+// codecs
+include(":fallow-codec-common")
+include(":fallow-codec-jackson")
+
+// brokers
+include(":fallow-broker-common")
+include(":fallow-broker-nats")
+include(":fallow-broker-redis")
