@@ -1,5 +1,5 @@
 [versions]
-annotations = "26.0.2"
+annotations = "26.0.2-1"
 wisp = "1.0.1-SNAPSHOT"
 jnats = "2.21.5"
 lettuce = "6.8.1.RELEASE"
