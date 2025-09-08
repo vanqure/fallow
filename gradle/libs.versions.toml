@@ -1,7 +1,7 @@
 [versions]
 annotations = "26.0.2"
 wisp = "1.0.1-SNAPSHOT"
-jnats = "2.21.5"
+jnats = "2.22.0"
 lettuce = "6.8.1.RELEASE"
 jackson = "2.20.0"
 
